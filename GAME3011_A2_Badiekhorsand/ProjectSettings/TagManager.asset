@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Win
   - Obstacle
+  - Start
   layers:
   - Default
   - TransparentFX

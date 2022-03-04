@@ -32,4 +32,5 @@ public class BorderRotator : MonoBehaviour
        
         isRotating = false;
     }
+   
 }

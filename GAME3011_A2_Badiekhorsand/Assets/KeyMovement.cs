@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class KeyMovement : MonoBehaviour
 {
-    public BorderRotator Board;
-    public GameObject BoardStartpoint;
+   
     public AudioSource lockSound;
     public int points = 0;
     public float movementSpeed = 5.0f;
+    public GameObject winCanvas;
+    public GameObject loseCanvas;
     // Start is called before the first frame update
     void Start()
     {
-        transform.position = BoardStartpoint.transform.position;
+        
     }
 
     // Update is called once per frame
@@ -39,9 +40,26 @@ public class KeyMovement : MonoBehaviour
 
                 lockSound.Play();
                 points++;
+                if (points >= 10)
+                {
+                    winCanvas.SetActive(true);
+                    Time.timeScale = 0f;
+                }
             }
                 
        
+        }
+    }
+    void OnCollisionEnter(Collision collision)
+    {
+
+
+        if (collision.gameObject.tag == "Obstacle")
+        {
+            loseCanvas.SetActive(true);
+            Time.timeScale = 0f;
+
+
         }
     }
 }
