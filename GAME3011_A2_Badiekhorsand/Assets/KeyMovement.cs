@@ -6,6 +6,9 @@ public class KeyMovement : MonoBehaviour
 {
     public BorderRotator Board;
     public GameObject BoardStartpoint;
+    public AudioSource lockSound;
+    public int points = 0;
+    public float movementSpeed = 5.0f;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,13 +18,30 @@ public class KeyMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.D))
-        {
+        //get the Input from Horizontal axis
+        float horizontalInput = Input.GetAxis("Horizontal");
+        //get the Input from Vertical axis
+        float verticalInput = Input.GetAxis("Vertical");
 
-            Board.RotateBoard();
+        //update the position
+        transform.position = transform.position + new Vector3(horizontalInput * movementSpeed * Time.deltaTime, 0, verticalInput * movementSpeed * Time.deltaTime);
+
+    }
+
+    void OnTriggerStay(Collider collision)
+    {
+      
+       
+        if (collision.gameObject.tag == "Win")
+        {
+            if (!lockSound.isPlaying)
+            {
+
+                lockSound.Play();
+                points++;
+            }
+                
+       
         }
-       float distance_to_screen = Camera.main.WorldToScreenPoint(gameObject.transform.position).z;
-        Vector3 pos_move = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance_to_screen));
-        transform.position = new Vector3(pos_move.x, pos_move.y, pos_move.z);
     }
 }
